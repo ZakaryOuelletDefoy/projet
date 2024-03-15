@@ -1,0 +1,13 @@
+# Port d'écoute
+Port 22
+
+# Authentification par clés
+PermitRootLogin no
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+UsePAM yes
+AuthorizedKeysFile /etc/ssh/authorized_keys
+
+# Limite de tentatives de connexion
+MaxAuthTries 2
+LoginGraceTime 5m

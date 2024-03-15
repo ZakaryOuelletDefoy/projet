@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  zion:
+    build: ./zion
+    container_name: zion
+    hostname: zion
+    networks:
+      matrix:
+        ipv4_address: 10.0.0.4
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "22:22"
+      - "80:80"
+    restart: always
+    volumes:
+      - ./zion/matrix:/var/www/html
+  
+
+  neo:
+    build: ./neo
+    container_name: neo
+    hostname: neo
+    networks:
+      matrix:
+        ipv4_address: 10.0.0.2
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "514:514"
+    restart: always
+    volumes:
+      - ./neo/:/etc/neo
+  
+  smith:
+    build: ./smith
+    container_name: smith
+    hostname: smith
+    networks:
+      matrix:
+        ipv4_address: 10.0.0.3
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "22:22"
+      - "80:80"
+    restart: always
+    volumes:
+      - ./zion/matrix:/var/www/html
+
+networks:
+  matrix:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/29  
